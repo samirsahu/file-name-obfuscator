@@ -1,8 +1,9 @@
 version: "3.8"
 
 services:
-  dev:
+  app:
     build: .
     volumes:
       - ./:/workarea/
-      - ~/Downloads/Folder_to_rename/:/workarea/src_dir/
+      # - /tmp/:/workarea/src_dir/
+    command: bash

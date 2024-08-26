@@ -3,6 +3,7 @@ import argparse
 import os
 import uuid
 import json
+from datetime import datetime
 from typing import TypedDict, cast
 
 class JFile(TypedDict):
@@ -93,13 +94,14 @@ def create_arg_parsers() -> argparse.ArgumentParser:
     return parser
 
 if __name__ == "__main__":
-    print("Hello World!")
     parser = create_arg_parsers()
 
     parsed_args = parser.parse_args()
     print("Args", parsed_args)
     if parsed_args.mode == "encode":
-        encode(parsed_args.dir, parsed_args.meta_file)
+        today = datetime.now().strftime("%Y%m%d%H%M%S")
+        meta_file = f"{parsed_args.meta_file}-{today}"
+        encode(parsed_args.dir, meta_file)
     elif parsed_args.mode == "decode":
         decode(parsed_args.dir, parsed_args.meta_file)
     

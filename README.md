@@ -1,24 +1,20 @@
 # file-name-obfuscator.
 
-An app to recursively obfuscate the file names in a directory.
+An app to recursively obfuscate the file names in a directory. Should have docker installed.
 
-Currently Designed to run within a Docker container. Follow steps to execute:
+# Run Quick:
+```bash
+# Encode:
+docker-compose run --build --rm -v "/tmp/:/workarea/src_dir" app python main.py encode src_dir manifest.json
 
-In order to setup a source folder, you'll need to load that as a Docker Volume as follows:
+# Decode:
+docker-compose run --build --rm -v "/tmp/:/workarea/src_dir" app python main.py decode src_dir manifest.json-YYYYmmDDHHMMSS
 
-```yaml
-version: "3.8"
-
-services:
-  dev:
-    build: .
-    volumes:
-      - ./:/workarea/
-      - ~/Downloads/Folder_to_rename/:/workarea/src_dir/
 ```
 
+# Run manually:
 ```bash
-$ docker-compose run dev
+$ docker-compose run --build --rm -v "/tmp/:/workarea/src_dir" app
 
 # within docker container, run the following commands:
 
@@ -31,3 +27,19 @@ $ python main.py decode ./src_dir ./manifest.json
 # outside the docker container:
 $ docker-compose down
 ```
+
+# Run VSCode within Docker Container:
+
+Uncomment the commented Volume in docker-compose.yaml. Change `/tmp/` to point to the correct source directory.
+
+```yaml
+version: "3.8"
+
+services:
+  app:
+    build: .
+    volumes:
+      - ./:/workarea/
+      # - /tmp/:/workarea/src_dir/
+```
+Then run VScode: "Reopen in container".
